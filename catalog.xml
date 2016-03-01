@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/home/steve/NetBeansProjects/JDays2016/src/test/java/roadworks.xsd" uri="src/main/resources/jaxb/RoadWorks/roadworks.xsd"/>
+</catalog>
