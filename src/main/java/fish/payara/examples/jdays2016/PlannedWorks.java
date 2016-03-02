@@ -5,13 +5,16 @@
  */
 package fish.payara.examples.jdays2016;
 
+import fish.payara.examples.jdays2016.jaxb.HaPlannedRoadworks;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -23,6 +26,7 @@ import javax.persistence.Temporal;
     @NamedQuery(name = "PlannedWorks.findByRoad", query = "SELECT p from PlannedWorks p where p.road = :road"),
     @NamedQuery(name = "PlannedWorkd.findByRoadAndDate", query = "SELECT p from PlannedWorks p where p.road = :road AND  :searchDate >= p.startDate AND :searchDate <= p.endDate")
 })
+@XmlRootElement
 public class PlannedWorks implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,6 +40,8 @@ public class PlannedWorks implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date endDate;
     private String delay;
+    
+    @Column(length = 1337)
     private String description;
     private String trafficManagement;
     private String type;
@@ -44,6 +50,27 @@ public class PlannedWorks implements Serializable {
     private String status;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date publishedDate;
+
+    public PlannedWorks() {
+    }
+    
+
+    PlannedWorks(HaPlannedRoadworks.HaPlannedWorks works) {
+        this.area = works.getLocalAuthority();
+        this.delay = works.getExpectedDelay();
+        this.description = works.getDescription();
+        this.easting = (long)works.getCentreEasting();
+        this.endDate = works.getEndDate().toGregorianCalendar().getTime();
+        this.id = (long)works.getReferenceNumber();
+        this.location = works.getLocation();
+        this.northing = (long)works.getCentreNorthing();
+        this.publishedDate = works.getPublishedDate().toGregorianCalendar().getTime();
+        this.road = works.getRoad();
+        this.startDate = works.getStartDate().toGregorianCalendar().getTime();
+        this.status = works.getStatus();
+        this.trafficManagement = works.getTrafficManagement();
+        this.type = works.getClosureType();
+    }
 
     public String getRoad() {
         return road;
@@ -183,8 +210,10 @@ public class PlannedWorks implements Serializable {
 
     @Override
     public String toString() {
-        return "fish.payara.examples.jdays2016.PlannedWorks[ id=" + id + " ]";
+        return "PlannedWorks{" + "id=" + id + ", road=" + road + ", area=" + area + ", location=" + location + ", startDate=" + startDate + ", endDate=" + endDate + ", delay=" + delay + ", description=" + description + ", trafficManagement=" + trafficManagement + ", type=" + type + ", easting=" + easting + ", northing=" + northing + ", status=" + status + ", publishedDate=" + publishedDate + '}';
     }
+
+
 
     
 }

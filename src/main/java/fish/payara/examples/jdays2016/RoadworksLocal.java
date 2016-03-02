@@ -5,32 +5,34 @@
  */
 package fish.payara.examples.jdays2016;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.Resource;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
  * @author steve
  */
 @Stateless
-public class PlannedWorksFacade extends AbstractFacade<PlannedWorks> {
+public class RoadworksLocal {
 
     @PersistenceContext(unitName = "fish.payara.examples_JDays2016_war_1.0-SNAPSHOTPU")
     private EntityManager em;
-    @Resource
-    private javax.transaction.UserTransaction utx;
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    public PlannedWorksFacade() {
-        super(PlannedWorks.class);
+    
+    public List<PlannedWorks> findAll() {
+        return em.createNamedQuery("PlannedWorks.findAll").getResultList();
     }
     
+    public PlannedWorks find(long ID) {
+        return em.find(PlannedWorks.class, ID);
+    }
+    
+    public List<PlannedWorks> findByRoad(String road) {
+        Query query = em.createNamedQuery("PlannedWorks.findByRoad");
+        query.setParameter("road", road);
+        return query.getResultList();
+    }
+
 }
