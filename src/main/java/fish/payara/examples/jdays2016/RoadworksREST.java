@@ -6,9 +6,6 @@
 package fish.payara.examples.jdays2016;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.cache.annotation.CacheResult;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -46,13 +43,7 @@ public class RoadworksREST {
      */
     @GET
     @Produces(MediaType.APPLICATION_XML)
-    @CacheResult
     public List<PlannedWorks> getAllWorks()  {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(RoadworksREST.class.getName()).log(Level.SEVERE, null, ex);
-        }
         return ejb.findAll();
     }
     
@@ -63,26 +54,14 @@ public class RoadworksREST {
     @GET
     @Produces(MediaType.APPLICATION_XML)
     @Path("{id}/")
-    @CacheResult
     public PlannedWorks getWorks(@PathParam("id") long id) {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(RoadworksREST.class.getName()).log(Level.SEVERE, null, ex);
-        }
         return ejb.find(id);
     }
     
     @GET
     @Produces(MediaType.APPLICATION_XML)
     @Path("/road/{name}/")
-    @CacheResult
     public List<PlannedWorks> getWorksByRoad(@PathParam("name") String name) {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(RoadworksREST.class.getName()).log(Level.SEVERE, null, ex);
-        }
         return ejb.findByRoad(name);
     }
 }

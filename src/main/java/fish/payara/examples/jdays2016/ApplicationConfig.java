@@ -19,7 +19,7 @@ import javax.ws.rs.core.Application;
  *
  * @author steve
  */
-@javax.ws.rs.ApplicationPath("roadworks")
+@javax.ws.rs.ApplicationPath("/")
 public class ApplicationConfig extends Application {
 
 
